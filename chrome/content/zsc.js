@@ -1,29 +1,18 @@
 let zsc = {
   _captchaString: "",
   _citedPrefixString: "Cited by ",
-  _citeCountStrLength: 7,
-  _extraPrefix: "ZSCC",
-  _extraEntrySep: " \n",
-  _noData: "NoCitationData",
   // _searchblackList: new RegExp('[-+~*":]', 'g'),
   _baseUrl: "https://scholar.google.com/",
+  _min_wait_time: 3000, // 3 seconds
+  _max_wait_time: 5000, // 5 seconds
 
-  _min_wait_time: 3000,
-  _max_wait_time: 5000,
+  _extraPrefix: "ZSCC:",
+  _citeCountStrLength: 5,
+  _noData: "NoData",
+  _extraEntrySep: "\n",
 };
 
-zsc._extraRegex = new RegExp(
-  "^(?:(?:" +
-    zsc._extraPrefix +
-    ": )?)" +
-    "((?:(?:\\d{" +
-    zsc._citeCountStrLength +
-    "}|" +
-    zsc._noData +
-    ")|(?:\\d{5}|No Citation Data))?)" +
-    "\\[?s?(\\d|)\\]?" +
-    "([^]*)$"
-);
+zsc._extraRegex = new RegExp(zsc._extraPrefix + ".*");
 
 let isDebug = function () {
   return (
@@ -125,19 +114,16 @@ zsc.processItems = function (items) {
     if (!zsc.hasRequiredFields(item)) {
       if (isDebug())
         Zotero.debug(
-          "[scholar-citations] " +
-            'skipping item "' +
+          "[scholar-citations] skipping item '" +
             item.getField("title") +
-            '"' +
-            " it has either an empty title or is missing creator information"
+            "' it has either an empty title or is missing creator information"
         );
       continue;
     }
 
     if (isDebug())
       Zotero.debug(
-        "[scholar-citations] " +
-          "this retrieving will run in " +
+        "[scholar-citations] this retrieving will run in " +
           time +
           "milliseconds later."
       );
@@ -149,10 +135,7 @@ zsc.processItems = function (items) {
       function (item, citeCount) {
         if (isDebug())
           Zotero.debug(
-            "[scholar-citations] " +
-              'Updating item "' +
-              item.getField("title") +
-              '"'
+            "[scholar-citations] Updating item '" + item.getField("title") + "'"
           );
         zsc.updateItem(item, citeCount);
       }
@@ -164,74 +147,31 @@ zsc.processItems = function (items) {
 
 zsc.updateItem = function (item, citeCount) {
   let curExtra = item.getField("extra");
-  let matches = curExtra.match(zsc._extraRegex);
-  let newExtra = "";
 
-  if (citeCount >= 0) {
-    newExtra += zsc.buildCiteCountString(citeCount);
+  if (isDebug())
+    Zotero.debug("[scholar-citations] current extra field is: " + curExtra);
+
+  let newExtra = zsc.buildCiteCountString(citeCount);
+  if (zsc._extraRegex.test(curExtra)) {
+    // if already have ZSCC string
+    newExtra = curExtra.replace(zsc._extraRegex, newExtra);
     if (isDebug())
       Zotero.debug(
-        "[scholar-citations] " + "updating extra field with new cite count"
+        "[scholar-citations] replace old ZSCC with new string " + newExtra
       );
   } else {
-    if (matches[1] === "") {
-      if (isDebug())
-        Zotero.debug(
-          "[scholar-citations] " +
-            "updating extra field that contains no zsc content"
-        );
-      newExtra += zsc.buildCiteCountString(citeCount);
-    } else if (
-      matches[1] === zsc._noData ||
-      matches[1] === "No Citation Data"
-    ) {
-      if (isDebug())
-        Zotero.debug(
-          "[scholar-citations] " +
-            'updating extra field that contains "no data"'
-        );
-      newExtra += zsc.buildCiteCountString(citeCount);
-    } else {
-      let oldCiteCount = parseInt(matches[1]);
-      newExtra += zsc.buildCiteCountString(oldCiteCount);
-      if (isDebug())
-        Zotero.debug(
-          "[scholar-citations] " +
-            "updating extra field that contains cite count"
-        );
-    }
-
-    if (!matches[2]) {
-      if (isDebug())
-        Zotero.debug("[scholar-citations] " + "marking extra field as stale");
-      newExtra += zsc.buildStalenessString(0);
-    } else {
-      if (isDebug())
-        Zotero.debug(
-          "[scholar-citations] " + "increasing staleness counter in extra field"
-        );
-      newExtra += zsc.buildStalenessString((parseInt(matches[2]) + 1) % 10);
-    }
+    // if not have ZSCC string
+    newExtra = newExtra + zsc._extraEntrySep + curExtra;
+    if (isDebug())
+      Zotero.debug("[scholar-citations] add ZSCC to extra field " + newExtra);
   }
-
-  if (/^\s\n/.test(matches[3]) || matches[3] === "") {
-    // do nothing, since the separator is already correct or not needed at all
-  } else if (/^\n/.test(matches[3])) {
-    newExtra += " ";
-  } else {
-    newExtra += zsc._extraEntrySep;
-  }
-  newExtra += matches[3];
 
   item.setField("extra", newExtra);
-
   try {
     item.saveTx();
   } catch (e) {
     if (isDebug())
-      Zotero.debug(
-        "[scholar-citations] " + "could not update extra content: " + e
-      );
+      Zotero.debug("[scholar-citations] could not update extra content: " + e);
   }
 };
 
@@ -253,7 +193,7 @@ zsc.retrieveCitationData = function (item, cb) {
       if (this.responseText.indexOf('class="gs_r gs_or gs_scl"') != -1) {
         if (isDebug())
           Zotero.debug(
-            "[scholar-citations] " + "recieved non-captcha scholar results"
+            "[scholar-citations] received non-captcha scholar results"
           );
         cb(item, zsc.getCiteCount(this.responseText));
         // check if response includes captcha
@@ -262,8 +202,7 @@ zsc.retrieveCitationData = function (item, cb) {
       ) {
         if (isDebug())
           Zotero.debug(
-            "[scholar-citations] " +
-              "received a captcha instead of a scholar result"
+            "[scholar-citations] received a captcha instead of a scholar result"
           );
         alert(zsc._captchaString);
         if (typeof Zotero.openInViewer !== "undefined") {
@@ -279,8 +218,7 @@ zsc.retrieveCitationData = function (item, cb) {
         // debug response text in other cases
         if (isDebug())
           Zotero.debug(
-            "[scholar-citations] " +
-              "neither got meaningful text or captcha, please check the following response text"
+            "[scholar-citations] neither got meaningful text or captcha, please check the following response text"
           );
         if (isDebug()) Zotero.debug(this.responseText);
         alert("neither got meaningful text or captcha, please check it in log");
@@ -289,8 +227,7 @@ zsc.retrieveCitationData = function (item, cb) {
       if (this.responseText.indexOf("www.google.com/recaptcha/api.js") == -1) {
         if (isDebug())
           Zotero.debug(
-            "[scholar-citations] " +
-              "could not retrieve the google scholar data. Server returned: [" +
+            "[scholar-citations] could not retrieve the google scholar data. Server returned: [" +
               xhr.status +
               ": " +
               xhr.statusText +
@@ -302,8 +239,7 @@ zsc.retrieveCitationData = function (item, cb) {
       } else {
         if (isDebug())
           Zotero.debug(
-            "[scholar-citations] " +
-              "received a captcha instead of a scholar result"
+            "[scholar-citations] received a captcha instead of a scholar result"
           );
         alert(zsc._captchaString);
         if (typeof Zotero.openInViewer !== "undefined") {
@@ -319,8 +255,7 @@ zsc.retrieveCitationData = function (item, cb) {
     } else if (this.readyState == 4) {
       if (isDebug())
         Zotero.debug(
-          "[scholar-citations] " +
-            "could not retrieve the google scholar data. Server returned: [" +
+          "[scholar-citations] could not retrieve the google scholar data. Server returned: [" +
             xhr.status +
             ": " +
             xhr.statusText +
@@ -379,15 +314,13 @@ zsc.padLeftWithZeroes = function (numStr) {
 };
 
 zsc.buildCiteCountString = function (citeCount) {
-  if (citeCount < 0) return zsc._extraPrefix + ": " + zsc._noData;
-  else
-    return (
-      zsc._extraPrefix + ": " + zsc.padLeftWithZeroes(citeCount.toString())
-    );
-};
-
-zsc.buildStalenessString = function (stalenessCount) {
-  return "[s" + stalenessCount + "]";
+  if (citeCount < 0) {
+    countString = zsc._extraPrefix + zsc._noData;
+  } else {
+    countString =
+      zsc._extraPrefix + zsc.padLeftWithZeroes(citeCount.toString());
+  }
+  return countString;
 };
 
 zsc.getCiteCount = function (responseText) {
