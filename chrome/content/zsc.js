@@ -12,7 +12,7 @@ let zsc = {
   _extraEntrySep: "\n",
 };
 
-zsc._extraRegex = new RegExp(zsc._extraPrefix + ".*");
+zsc._extraRegex = new RegExp(zsc._extraPrefix + ".{0,20}");
 
 let isDebug = function () {
   return (
@@ -184,6 +184,7 @@ zsc.retrieveCitationData = function (item, cb) {
   let citeCount;
   let xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
+  // xhr.responseType = "document";
   xhr.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       // // debug on response text
@@ -191,13 +192,35 @@ zsc.retrieveCitationData = function (item, cb) {
 
       // check if response includes meaningful content
       if (this.responseText.indexOf('class="gs_r gs_or gs_scl"') != -1) {
-        if (isDebug())
+        if (isDebug()) {
           Zotero.debug(
-            "[scholar-citations] received non-captcha scholar results"
+            "[scholar-citations] received non-captcha scholar results!"
           );
+
+          // check if the returned title match with the itme title
+          var title1 = item
+            .getField("title")
+            .trim()
+            .toLowerCase()
+            .replace(/  +/g, " ");
+          Zotero.debug("[scholar-citations] the item title: " + title1);
+          var parser = new DOMParser();
+          var htmlDoc = parser.parseFromString(this.responseText, "text/html");
+          var title2 = htmlDoc
+            .getElementsByClassName("gs_rt")[0]
+            .innerText.trim()
+            .toLowerCase()
+            .replace(/  +/g, " ");
+          Zotero.debug("[scholar-citations] the queried title: " + title2);
+          Zotero.debug(
+            "[scholar-citations] will item title equals to queried title?" +
+              (title1 === title2)
+          );
+        }
+
         cb(item, zsc.getCiteCount(this.responseText));
-        // check if response includes captcha
       } else if (
+        // check if response includes captcha
         this.responseText.indexOf("www.google.com/recaptcha/api.js") != -1
       ) {
         if (isDebug())
@@ -225,6 +248,7 @@ zsc.retrieveCitationData = function (item, cb) {
       }
     } else if (this.readyState == 4 && this.status == 429) {
       if (this.responseText.indexOf("www.google.com/recaptcha/api.js") == -1) {
+        // failed without captcha
         if (isDebug())
           Zotero.debug(
             "[scholar-citations] could not retrieve the google scholar data. Server returned: [" +
@@ -237,6 +261,7 @@ zsc.retrieveCitationData = function (item, cb) {
               " seconds before sending further requests."
           );
       } else {
+        // failed with captcha
         if (isDebug())
           Zotero.debug(
             "[scholar-citations] received a captcha instead of a scholar result"

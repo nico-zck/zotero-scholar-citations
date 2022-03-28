@@ -5,8 +5,11 @@
 
 New features: 
 - Improve the process of dealing with reCAPTCHA, especially in China;
-- Fix url error when encounter special characters in the paper title;
 - When updating many items, a random time delay is added, which may avoid Google Scholar traffic detection and reduce the frequency of reCAPTCHA;
+- Fix url error when encounter special characters in the paper title;
+- Add a rough time range to the generated query url:
+    > For example, if a paper titled "Explaining and Exploiting Adversarial Examples" has a year of "2013" in Zotero, the original version will produce a URL that results in an incorrect query (https://scholar.google.com/scholar?q=Explaining+and+Harnessing+Adversarial+Examples&hl=en&as_sdt=0%2C5&as_ylo=2013&as_yhi=2013), while a looser range, such as 2012 - 2014, will hit the correct query (https://scholar.google.com/scholar?q=Explaining+and+Harnessing+Adversarial+Examples&hl=en&as_sdt=0%2C5&as_ylo=2012&as_yhi=2014).
+
 
 v2.0.5
 - Adaptation for Zotero 6.0;
