@@ -1,0 +1,5 @@
+<!ENTITY zscc-preferences "ZSCC Preferences">
+<!ENTITY zscc-prefpane "ZSCC Preferences">
+<!ENTITY scholar-url-label "Scholar Mirror Site (BETA)">
+<!ENTITY scholar-url-desc "The format should start with 'https://' and end with '/', e.g. https://scholar.google.com/. Leave this blank will use the official site.">
+<!ENTITY scholar-url-verify "Verify URL">

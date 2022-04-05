@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://zotero-platform/content/preferences.css"?>
+<?xml-stylesheet href="chrome://zotero-platform-version/content/style.css"?>
+
+<!DOCTYPE window SYSTEM "chrome://zoteroscholarcitations/locale/options.dtd">
+
+<prefwindow id="zscc-perf" title="&zscc-preferences;"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<prefpane label="&zscc-prefpane;" id="zscc-perfpane">
+		<preferences>
+			<preference id="pref-zscc-scholar-url" name="extensions.zscc.scholarUrl" type="string"/>
+		</preferences>
+
+		<groupbox>
+			<separator class="thin"/>
+			<label id="pref-zscc-scholar-url-label" value="&scholar-url-label;"/>
+			<description>&scholar-url-desc;</description>
+			<textbox id="pref-zscc-scholar-url" preference="pref-zscc-scholar-url"/>
+			<button id="pref-zscc-url-verify" label="&scholar-url-verify;" oncommand="checkScholarUrl();"/>
+			<separator class="thin"/>
+		</groupbox>
+
+
+	</prefpane>
+	<script src="options.js"/>
+	<script src="chrome://zotero/content/include.js"/>
+</prefwindow>

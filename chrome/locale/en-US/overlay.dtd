@@ -1,3 +1,4 @@
 <!ENTITY zotero.scholarcitations.update.label "Update citation(s)">
 <!ENTITY zotero.scholarcitations.updateCol.label "Update citations">
 <!ENTITY zotero.scholarcitations.updateAll.label "Update all citations">
+<!ENTITY zotero.scholarcitations.options.label "ZSCC Preferences...">

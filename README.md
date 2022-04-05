@@ -11,6 +11,7 @@ New features:
     > For example, if a paper titled "Explaining and Exploiting Adversarial Examples" has a year of "2013" in Zotero, the original version will produce a URL that results in an incorrect query (https://scholar.google.com/scholar?q=Explaining+and+Harnessing+Adversarial+Examples&hl=en&as_sdt=0%2C5&as_ylo=2013&as_yhi=2013), while a looser range, such as 2012 - 2014, will hit the correct query (https://scholar.google.com/scholar?q=Explaining+and+Harnessing+Adversarial+Examples&hl=en&as_sdt=0%2C5&as_ylo=2012&as_yhi=2014).
 
 
+## Changelog
 v2.0.5
 - Adaptation for Zotero 6.0;
 
@@ -18,6 +19,20 @@ v2.0.6
 - Simplify the updating process;
 - Shrinkage the count string length of ZSCC ("ZSCC: 0000001" => "ZSCC:00001");
 - Remove state indicator of staleness;
+
+v2.1.0
+- Add auto updating;
+- Improve the query url with multiple authors;
+- Add preference for base query url (beta);
+
+
+
+## Development
+1. Clone this source code.
+2. Create a text file in the 'extensions' directory of your Zotero profile directory named after the extension id `zoteroscholarcitations@nico.info`. The file contents should be the absolute path to the root of your plugin source code directory, where your install.rdf file is located.
+3. Open prefs.js in the Zotero profile directory in a text editor and delete the lines containing `extensions.lastAppBuildId` and `extensions.lastAppVersion`. Save the file and restart Zotero. This will force Zotero to read the extensions' directory and install your plugin from source, after which you should see it listed in Tools → Add-ons. This is only necessary once.
+4. Run zotero with argments `-purgecaches -ZoteroDebug`, for example:
+   >./zotero.exe -purgecaches -ZoteroDebug
 
 
 ---

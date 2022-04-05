@@ -1,8 +1,21 @@
+function isDebug() {
+  return (
+    typeof Zotero != "undefined" &&
+    typeof Zotero.Debug != "undefined" &&
+    Zotero.Debug.enabled
+  );
+}
+
+function getPref(pref) {
+  return Zotero.Prefs.get("extensions.zscc." + pref);
+}
+
+//######################################################################
 let zsc = {
   _captchaString: "",
   _citedPrefixString: "Cited by ",
   // _searchblackList: new RegExp('[-+~*":]', 'g'),
-  _baseUrl: "https://scholar.google.com/",
+  // _baseUrl: "https://scholar.google.com/",
   _min_wait_time: 3000, // 3 seconds
   _max_wait_time: 5000, // 5 seconds
 
@@ -12,15 +25,7 @@ let zsc = {
   _extraEntrySep: "\n",
 };
 
-zsc._extraRegex = new RegExp(zsc._extraPrefix + ".{0,20}");
-
-let isDebug = function () {
-  return (
-    typeof Zotero != "undefined" &&
-    typeof Zotero.Debug != "undefined" &&
-    Zotero.Debug.enabled
-  );
-};
+zsc._extraRegex = new RegExp(zsc._extraPrefix + ".{0,20}" + zsc._extraEntrySep);
 
 zsc.init = function () {
   let stringBundle = document.getElementById("zoteroscholarcitations-bundle");
@@ -184,7 +189,7 @@ zsc.retrieveCitationData = function (item, cb) {
   let citeCount;
   let xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
-  // xhr.responseType = "document";
+  // xhr.responseType = "document";  // will return a HTMLDocument instead of text
   xhr.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       // // debug on response text
@@ -295,8 +300,8 @@ zsc.retrieveCitationData = function (item, cb) {
 
 zsc.generateItemUrl = function (item) {
   let url =
-    zsc._baseUrl +
-    "scholar?hl=en&q=" +
+    zsc.getBaseUrl() +
+    "scholar?hl=en&as_q=" +
     // + zsc.cleanTitle(item.getField('title'))
     item.getField("title") +
     "&as_epq=&as_occt=title&num=1";
@@ -316,7 +321,7 @@ zsc.generateItemUrl = function (item) {
   let year = parseInt(item.getField("year"));
   if (year) {
     // set a small range of year instead of an exact number
-    url += "&as_ylo=" + (year - 2) + "&as_yhi=" + (year + 2);
+    url += "&as_ylo=" + (year - 1) + "&as_yhi=" + (year + 1);
   }
 
   return encodeURI(url);
@@ -364,6 +369,40 @@ zsc.getCiteCount = function (responseText) {
   }
 };
 
+zsc.openPreferenceWindow = function (paneID, action) {
+  var io = { pane: paneID, action: action };
+  window.openDialog(
+    "chrome://zoteroscholarcitations/content/options.xul",
+    "zotero-scholarcitations-options",
+    "chrome,titlebar,toolbar,centerscreen" +
+      Zotero.Prefs.get("browser.preferences.instantApply", true)
+      ? "dialog=no"
+      : "modal",
+    io
+  );
+};
+
+zsc.getBaseUrl = function () {
+  defaultUrl = "https://scholar.google.com/";
+  userUrl = getPref("scholarUrl");
+
+  if (userUrl != null && userUrl.length > 0 && getPref("scholarUrlVerified")) {
+    if (isDebug) {
+      Zotero.debug(
+        "[scholar-citations] will use a user specified base url: " + userUrl
+      );
+    }
+    return userUrl;
+  } else {
+    if (isDebug) {
+      Zotero.debug(
+        "[scholar-citations] will use the default base url: " + defaultUrl
+      );
+    }
+    return defaultUrl;
+  }
+};
+
 if (typeof window !== "undefined") {
   window.addEventListener(
     "load",
@@ -383,6 +422,9 @@ if (typeof window !== "undefined") {
   };
   window.Zotero.ScholarCitations.updateItemMenuEntries = function () {
     zsc.updateItemMenuEntries();
+  };
+  window.Zotero.ScholarCitations.openPreferenceWindow = function () {
+    zsc.openPreferenceWindow();
   };
 }
 
