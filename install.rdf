@@ -4,13 +4,13 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>zoteroscholarcitations@nico.info</em:id>
     <em:name>Zotero Scholar Citations</em:name>
-    <em:version>2.1.0</em:version>
+    <em:version>2.1.1</em:version>
     <em:type>2</em:type>
     <em:multiprocessCompatible>true</em:multiprocessCompatible>
     <em:creator>Nico</em:creator>
     <em:homepageURL>https://github.com/nico-zck/zotero-scholar-citations</em:homepageURL>
     <em:optionsURL>chrome://zoteroscholarcitations/content/options.xul</em:optionsURL>
-    <em:updateURL>https://github.com/nico-zck/zotero-scholar-citations/master/update.rdf</em:updateURL>
+    <em:updateURL>https://raw.githubusercontent.com/nico-zck/zotero-scholar-citations/master/update.rdf</em:updateURL>
 
     <em:targetApplication>
       <Description>

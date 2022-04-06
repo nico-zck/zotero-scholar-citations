@@ -25,7 +25,7 @@ let zsc = {
   _extraEntrySep: "\n",
 };
 
-zsc._extraRegex = new RegExp(zsc._extraPrefix + ".{0,20}" + zsc._extraEntrySep);
+zsc._extraRegex = new RegExp(zsc._extraPrefix + ".{0,20}");
 
 zsc.init = function () {
   let stringBundle = document.getElementById("zoteroscholarcitations-bundle");
@@ -156,7 +156,7 @@ zsc.updateItem = function (item, citeCount) {
   if (isDebug())
     Zotero.debug("[scholar-citations] current extra field is: " + curExtra);
 
-  let newExtra = zsc.buildCiteCountString(citeCount) + zsc._extraEntrySep;
+  let newExtra = zsc.buildCiteCountString(citeCount);
   if (zsc._extraRegex.test(curExtra)) {
     // if already have ZSCC string
     newExtra = curExtra.replace(zsc._extraRegex, newExtra);
@@ -166,7 +166,7 @@ zsc.updateItem = function (item, citeCount) {
       );
   } else {
     // if not have ZSCC string
-    newExtra = newExtra + curExtra;
+    newExtra = newExtra + zsc._extraEntrySep + curExtra;
     if (isDebug())
       Zotero.debug("[scholar-citations] add ZSCC to extra field " + newExtra);
   }
