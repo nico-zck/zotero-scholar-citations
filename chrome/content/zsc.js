@@ -189,6 +189,7 @@ zsc.retrieveCitationData = function (item, cb) {
   let citeCount;
   let xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
+  xhr.setRequestHeader("User-Agent", zsc.getUserAgent());
   // xhr.responseType = "document";  // will return a HTMLDocument instead of text
   xhr.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
@@ -304,7 +305,7 @@ zsc.generateItemUrl = function (item) {
     "scholar?hl=en&as_q=" +
     // + zsc.cleanTitle(item.getField('title'))
     item.getField("title") +
-    "&as_epq=&as_occt=title&num=1";
+    "&as_occt=title&num=1";
 
   let creators = item.getCreators();
   if (creators && creators.length > 0) {
@@ -314,7 +315,8 @@ zsc.generateItemUrl = function (item) {
     url += "&as_sauthors=";
     url += creators[0].lastName;
     for (let idx = 1; idx < num_creators; idx++) {
-      url += "+" + creators[idx].lastName;
+      // creatorTypeID = 1, only append authors not editors
+      if (creators["creatorTypeID"] == 1) url += "+" + creators[idx].lastName;
     }
   }
 
@@ -401,6 +403,13 @@ zsc.getBaseUrl = function () {
     }
     return defaultUrl;
   }
+};
+
+zsc.getUserAgent = function () {
+  defaultUA =
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.53 Safari/537.36";
+  // userUA = getPref("userAgent");
+  return defaultUA;
 };
 
 if (typeof window !== "undefined") {
