@@ -22,9 +22,18 @@
 
     <em:localized>
       <Description>
+        <em:locale>zh-CN</em:locale>
+        <em:name>Zotero 谷歌学术引用</em:name>
+        <em:creator>Nico</em:creator>
+        <em:description>从谷歌学术自动更新引用次数。</em:description>
+        <em:homepageURL>https://github.com/nico-zck/zotero-scholar-citations</em:homepageURL>
+      </Description>
+    </em:localized>
+    <em:localized>
+      <Description>
         <em:locale>en-US</em:locale>
         <em:name>Zotero Scholar Citations</em:name>
-        <em:description>Advanced PDF management for Zotero</em:description>
+        <em:description>The add-on automatically fetches the number of citations of your Zotero items from Google Scholar.</em:description>
       </Description>
     </em:localized>
     <em:localized>
