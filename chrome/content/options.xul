@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
+
+<!DOCTYPE prefwindow SYSTEM "chrome://zoteroscholarcitations/locale/options.dtd">
+
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <?xml-stylesheet href="chrome://zotero-platform/content/preferences.css"?>
 <?xml-stylesheet href="chrome://zotero-platform-version/content/style.css"?>
-
-<!DOCTYPE window SYSTEM "chrome://zoteroscholarcitations/locale/options.dtd">
 
 <prefwindow id="zscc-perf" title="&zscc-preferences;"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
@@ -11,17 +12,26 @@
 	<prefpane label="&zscc-prefpane;" id="zscc-perfpane">
 		<preferences>
 			<preference id="pref-zscc-scholar-url" name="extensions.zscc.scholarUrl" type="string"/>
+			<preference id="pref-zscc-user-agent" name="extensions.zscc.userAgent" type="string"/>
 		</preferences>
 
 		<groupbox>
 			<separator class="thin"/>
-			<label id="pref-zscc-scholar-url-label" value="&scholar-url-label;"/>
+			<label value="&scholar-url-label;"/>
 			<description>&scholar-url-desc;</description>
 			<textbox id="pref-zscc-scholar-url" preference="pref-zscc-scholar-url"/>
 			<button id="pref-zscc-url-verify" label="&scholar-url-verify;" oncommand="checkScholarUrl();"/>
 			<separator class="thin"/>
 		</groupbox>
 
+		<groupbox>
+			<separator class="thin"/>
+			<label value="&user-agent-label;"/>
+			<description>&user-agent-desc;</description>
+			<textbox id="pref-zscc-user-agent" preference="pref-zscc-user-agent"/>
+			<button id="pref-zscc-user-agnet-save" label="&user-agent-save;" oncommand="saveUserAgent();"/>
+			<separator class="thin"/>
+		</groupbox>
 
 	</prefpane>
 	<script src="options.js"/>

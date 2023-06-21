@@ -88,3 +88,5 @@ build/
 builds/
 .DS_Store
 package-lock.json
+
+.VSCodeCounter

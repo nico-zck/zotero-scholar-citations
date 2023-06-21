@@ -408,8 +408,12 @@ zsc.getBaseUrl = function () {
 zsc.getUserAgent = function () {
   defaultUA =
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.53 Safari/537.36";
-  // userUA = getPref("userAgent");
-  return defaultUA;
+  userUA = getPref("userAgent");
+  if (userUA != null && userUA.length > 0) {
+    return userUA
+  } else{
+    return defaultUA;
+  }
 };
 
 if (typeof window !== "undefined") {

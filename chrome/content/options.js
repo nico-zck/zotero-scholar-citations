@@ -42,3 +42,12 @@ function checkScholarUrl() {
     }
   }
 }
+
+function saveUA() {
+  var boxText = document.getElementById("pref-zscc-user-agent").value;
+  if (boxText.length == 0) {
+    Zotero.Prefs.set("extensions.zscc.userAgent", "");
+  } else {
+    Zotero.Prefs.set("extensions.zscc.userAgent", boxText);
+  }
+}

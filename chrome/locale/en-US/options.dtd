@@ -1,5 +1,10 @@
 <!ENTITY zscc-preferences "ZSCC Preferences">
-<!ENTITY zscc-prefpane "ZSCC Preferences">
-<!ENTITY scholar-url-label "Scholar Mirror Site (BETA)">
+<!ENTITY zscc-prefpane "ZSCC Preferences Panel">
+
+<!ENTITY scholar-url-label "Google Scholar Mirror Site (BETA)">
 <!ENTITY scholar-url-desc "The format should start with 'https://' and end with '/', e.g. https://scholar.google.com/. Leave this blank will use the official site.">
-<!ENTITY scholar-url-verify "Verify URL">
+<!ENTITY scholar-url-verify "Verify URL and save">
+
+<!ENTITY user-agent-label "User Agent">
+<!ENTITY user-agent-desc "Set up a user agent for the built-in browser to reduce the chances of encountering reCAPTCHA. If you don't know what it is, leave it blank.">
+<!ENTITY user-agent-save "Save UA">

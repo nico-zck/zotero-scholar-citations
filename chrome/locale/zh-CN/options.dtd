@@ -1,0 +1,10 @@
+<!ENTITY zscc-preferences "ZSCC设置">
+<!ENTITY zscc-prefpane "ZSCC设置面板">
+
+<!ENTITY scholar-url-label "谷歌学术镜像(BETA)">
+<!ENTITY scholar-url-desc "URL的格式应该以'https://'开头并且以'/'结尾, 例如：“https://scholar.google.com/”. 此处留空则默认使用官方网站.">
+<!ENTITY scholar-url-verify "验证URL并保存">
+
+<!ENTITY user-agent-label "设置浏览器UA">
+<!ENTITY user-agent-desc "设置内置浏览器的User Agent, 某些情况可以降低遇见reCAPTCHA的概率. 如果你不知道这是什么请留空.">
+<!ENTITY user-agent-save "保存UA">

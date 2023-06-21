@@ -29,7 +29,7 @@ v2.1.0
 
 ## Development
 1. Clone this source code.
-2. Create a text file in the 'extensions' directory of your Zotero profile directory named after the extension id `zoteroscholarcitations@nico.info`. The file contents should be the absolute path to the root of your plugin source code directory, where your install.rdf file is located.
+2. Create a text file in the 'extensions' directory of your Zotero profile directory (refer to [this](https://www.zotero.org/support/dev/client_coding/plugin_development) for your profile path) named after the extension id `zoteroscholarcitations@nico.info`. The file contents should be the absolute path to the root of your plugin source code directory, where your install.rdf file is located.
 3. Open prefs.js in the Zotero profile directory in a text editor and delete the lines containing `extensions.lastAppBuildId` and `extensions.lastAppVersion`. Save the file and restart Zotero. This will force Zotero to read the extensions' directory and install your plugin from source, after which you should see it listed in Tools → Add-ons. This is only necessary once.
 4. Run zotero with argments `-purgecaches -ZoteroDebug`, for example:
    >./zotero.exe -purgecaches -ZoteroDebug

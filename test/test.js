@@ -144,37 +144,37 @@ suite('Unit Tests', function () {
                 assert.equal(matches[3], ' \nFooBar');
             });
 
-            // test('should match legacy zsc content', function () {
-            //     let matches = '00021'.match(zsc._extraRegex);
-            //     assert.equal(matches.length, 4);
-            //     assert.equal(matches[1], '00021');
-            //     assert.equal(matches[2], '');
-            //     assert.equal(matches[3], '');
-            // });
+            test('should match legacy zsc content', function () {
+                let matches = '00021'.match(zsc._extraRegex);
+                assert.equal(matches.length, 4);
+                assert.equal(matches[1], '00021');
+                assert.equal(matches[2], '');
+                assert.equal(matches[3], '');
+            });
 
-            // test('should match legacy zsc no data', function () {
-            //     let matches = 'No Citation Data'.match(zsc._extraRegex);
-            //     assert.equal(matches.length, 4);
-            //     assert.equal(matches[1], 'No Citation Data');
-            //     assert.equal(matches[2], '');
-            //     assert.equal(matches[3], '');
-            // });
+            test('should match legacy zsc no data', function () {
+                let matches = 'No Citation Data'.match(zsc._extraRegex);
+                assert.equal(matches.length, 4);
+                assert.equal(matches[1], 'No Citation Data');
+                assert.equal(matches[2], '');
+                assert.equal(matches[3], '');
+            });
 
-            // test('should match random content following legacy zsc content', function () {
-            //     let matches = '00021 \nFoo: Bar'.match(zsc._extraRegex);
-            //     assert.equal(matches.length, 4);
-            //     assert.equal(matches[1], '00021');
-            //     assert.equal(matches[2], '');
-            //     assert.equal(matches[3], ' \nFoo: Bar');
-            // });
+            test('should match random content following legacy zsc content', function () {
+                let matches = '00021 \nFoo: Bar'.match(zsc._extraRegex);
+                assert.equal(matches.length, 4);
+                assert.equal(matches[1], '00021');
+                assert.equal(matches[2], '');
+                assert.equal(matches[3], ' \nFoo: Bar');
+            });
 
-            // test('should match random content following legacy zsc no data', function () {
-            //     let matches = 'No Citation Data \n Foo: Bar'.match(zsc._extraRegex);
-            //     assert.equal(matches.length, 4);
-            //     assert.equal(matches[1], 'No Citation Data');
-            //     assert.equal(matches[2], '');
-            //     assert.equal(matches[3], ' \n Foo: Bar');
-            // });
+            test('should match random content following legacy zsc no data', function () {
+                let matches = 'No Citation Data \n Foo: Bar'.match(zsc._extraRegex);
+                assert.equal(matches.length, 4);
+                assert.equal(matches[1], 'No Citation Data');
+                assert.equal(matches[2], '');
+                assert.equal(matches[3], ' \n Foo: Bar');
+            });
         })
 
         suite('.updateItem()', function () {
@@ -222,27 +222,27 @@ suite('Unit Tests', function () {
                 assert(saveSpy.calledOnce);
             });
 
-            // test('should mark zsc extra content as stale', function () {
-            //     // Given
-            //     let getStub = sinon.stub();
-            //     let setSpy = sinon.spy();
-            //     let saveSpy = sinon.spy();
-            //     let item = {
-            //         getField: getStub,
-            //         setField: setSpy,
-            //         saveTx: saveSpy
-            //     };
-            //     let citeCount = -1;
-            //     getStub.withArgs('extra').returns('ZSCC:00042');
+            test('should mark zsc extra content as stale', function () {
+                // Given
+                let getStub = sinon.stub();
+                let setSpy = sinon.spy();
+                let saveSpy = sinon.spy();
+                let item = {
+                    getField: getStub,
+                    setField: setSpy,
+                    saveTx: saveSpy
+                };
+                let citeCount = -1;
+                getStub.withArgs('extra').returns('ZSCC:00042');
 
-            //     // When
-            //     zsc.updateItem(item, citeCount);
+                // When
+                zsc.updateItem(item, citeCount);
 
-            //     // Then
-            //     assert(getStub.calledWith('extra'));
-            //     assert(setSpy.calledWith('extra', 'ZSCC:00042[s0]'));
-            //     assert(saveSpy.calledOnce);
-            // });
+                // Then
+                assert(getStub.calledWith('extra'));
+                assert(setSpy.calledWith('extra', 'ZSCC:00042[s0]'));
+                assert(saveSpy.calledOnce);
+            });
 
             test('should update random extra content so it\'s prefixed with zsc data', function () {
                 // Given
@@ -288,225 +288,225 @@ suite('Unit Tests', function () {
                 assert(saveSpy.calledOnce);
             });
 
-            // test('should preserve extra data marking data as stale', function () {
-            //     // Given
-            //     let getStub = sinon.stub();
-            //     let setSpy = sinon.spy();
-            //     let saveSpy = sinon.spy();
-            //     let item = {
-            //         getField: getStub,
-            //         setField: setSpy,
-            //         saveTx: saveSpy
-            //     };
-            //     let citeCount = -1;
-            //     getStub.withArgs('extra').returns('ZSCC:00042 \narXiv: FooBar');
+            test('should preserve extra data marking data as stale', function () {
+                // Given
+                let getStub = sinon.stub();
+                let setSpy = sinon.spy();
+                let saveSpy = sinon.spy();
+                let item = {
+                    getField: getStub,
+                    setField: setSpy,
+                    saveTx: saveSpy
+                };
+                let citeCount = -1;
+                getStub.withArgs('extra').returns('ZSCC:00042 \narXiv: FooBar');
 
-            //     // When
-            //     zsc.updateItem(item, citeCount);
+                // When
+                zsc.updateItem(item, citeCount);
 
-            //     // Then
-            //     assert(getStub.calledWith('extra'));
-            //     assert(setSpy.calledWith('extra', 'ZSCC:00042[s0] \narXiv: FooBar'));
-            //     assert(saveSpy.calledOnce);
-            // });
+                // Then
+                assert(getStub.calledWith('extra'));
+                assert(setSpy.calledWith('extra', 'ZSCC:00042[s0] \narXiv: FooBar'));
+                assert(saveSpy.calledOnce);
+            });
 
-            // test('should update legacy extra entry to new format', function () {
-            //     // Given
-            //     let getStub = sinon.stub();
-            //     let setSpy = sinon.spy();
-            //     let saveSpy = sinon.spy();
-            //     let item = {
-            //         getField: getStub,
-            //         setField: setSpy,
-            //         saveTx: saveSpy
-            //     };
-            //     let citeCount = 42;
-            //     getStub.withArgs('extra').returns('00021');
+            test('should update legacy extra entry to new format', function () {
+                // Given
+                let getStub = sinon.stub();
+                let setSpy = sinon.spy();
+                let saveSpy = sinon.spy();
+                let item = {
+                    getField: getStub,
+                    setField: setSpy,
+                    saveTx: saveSpy
+                };
+                let citeCount = 42;
+                getStub.withArgs('extra').returns('00021');
 
-            //     // When
-            //     zsc.updateItem(item, citeCount);
+                // When
+                zsc.updateItem(item, citeCount);
 
-            //     // Then
-            //     assert(getStub.calledWith('extra'));
-            //     assert(setSpy.calledWith('extra', 'ZSCC:00042'));
-            //     assert(saveSpy.calledOnce);
-            // });
+                // Then
+                assert(getStub.calledWith('extra'));
+                assert(setSpy.calledWith('extra', 'ZSCC:00042'));
+                assert(saveSpy.calledOnce);
+            });
 
-            // test('should update legacy "no data" extra entry with new data', function () {
-            //     // Given
-            //     let getStub = sinon.stub();
-            //     let setSpy = sinon.spy();
-            //     let saveSpy = sinon.spy();
-            //     let item = {
-            //         getField: getStub,
-            //         setField: setSpy,
-            //         saveTx: saveSpy
-            //     };
-            //     let citeCount = 42;
-            //     getStub.withArgs('extra').returns('No Citation Data');
+            test('should update legacy "no data" extra entry with new data', function () {
+                // Given
+                let getStub = sinon.stub();
+                let setSpy = sinon.spy();
+                let saveSpy = sinon.spy();
+                let item = {
+                    getField: getStub,
+                    setField: setSpy,
+                    saveTx: saveSpy
+                };
+                let citeCount = 42;
+                getStub.withArgs('extra').returns('No Citation Data');
 
-            //     // When
-            //     zsc.updateItem(item, citeCount);
+                // When
+                zsc.updateItem(item, citeCount);
 
-            //     // Then
-            //     assert(getStub.calledWith('extra'));
-            //     assert(setSpy.calledWith('extra', 'ZSCC:00042'));
-            //     assert(saveSpy.calledOnce);
-            // });
+                // Then
+                assert(getStub.calledWith('extra'));
+                assert(setSpy.calledWith('extra', 'ZSCC:00042'));
+                assert(saveSpy.calledOnce);
+            });
 
-            // test('should update legacy "no data" entries, even when we have still no data', function () {
-            //     // Given
-            //     let getStub = sinon.stub();
-            //     let setSpy = sinon.spy();
-            //     let saveSpy = sinon.spy();
-            //     let item = {
-            //         getField: getStub,
-            //         setField: setSpy,
-            //         saveTx: saveSpy
-            //     };
-            //     let citeCountStr = -1;
-            //     getStub.withArgs('extra').returns('No Citation Data');
+            test('should update legacy "no data" entries, even when we have still no data', function () {
+                // Given
+                let getStub = sinon.stub();
+                let setSpy = sinon.spy();
+                let saveSpy = sinon.spy();
+                let item = {
+                    getField: getStub,
+                    setField: setSpy,
+                    saveTx: saveSpy
+                };
+                let citeCountStr = -1;
+                getStub.withArgs('extra').returns('No Citation Data');
 
-            //     // When
-            //     zsc.updateItem(item, citeCountStr);
+                // When
+                zsc.updateItem(item, citeCountStr);
 
-            //     // Then
-            //     assert(getStub.calledWith('extra'));
-            //     assert(setSpy.calledWith('extra', 'ZSCC:NoData'));
-            //     assert(saveSpy.calledOnce);
-            // });
+                // Then
+                assert(getStub.calledWith('extra'));
+                assert(setSpy.calledWith('extra', 'ZSCC:NoData'));
+                assert(saveSpy.calledOnce);
+            });
 
-            // test('should mark zsc entry as stale, if there is no new data', function () {
-            //     // Given
-            //     let getStub = sinon.stub();
-            //     let setSpy = sinon.spy();
-            //     let saveSpy = sinon.spy();
-            //     let item = {
-            //         getField: getStub,
-            //         setField: setSpy,
-            //         saveTx: saveSpy
-            //     };
-            //     let citeCountStr = -1;
-            //     getStub.withArgs('extra').returns('ZSCC:00042');
+            test('should mark zsc entry as stale, if there is no new data', function () {
+                // Given
+                let getStub = sinon.stub();
+                let setSpy = sinon.spy();
+                let saveSpy = sinon.spy();
+                let item = {
+                    getField: getStub,
+                    setField: setSpy,
+                    saveTx: saveSpy
+                };
+                let citeCountStr = -1;
+                getStub.withArgs('extra').returns('ZSCC:00042');
 
-            //     // When
-            //     zsc.updateItem(item, citeCountStr);
+                // When
+                zsc.updateItem(item, citeCountStr);
 
-            //     // Then
-            //     assert(getStub.calledWith('extra'));
-            //     assert(setSpy.calledWith('extra', 'ZSCC:00042'));
-            //     assert(saveSpy.calledOnce);
-            // });
+                // Then
+                assert(getStub.calledWith('extra'));
+                assert(setSpy.calledWith('extra', 'ZSCC:00042'));
+                assert(saveSpy.calledOnce);
+            });
 
-            // test('should increase staleness counter, if there is no new data', function () {
-            //     // Given
-            //     let getStub = sinon.stub();
-            //     let setSpy = sinon.spy();
-            //     let saveSpy = sinon.spy();
-            //     let item = {
-            //         getField: getStub,
-            //         setField: setSpy,
-            //         saveTx: saveSpy
-            //     };
-            //     let citeCountStr = -1;
-            //     getStub.withArgs('extra').returns('ZSCC:00042[s0]');
+            test('should increase staleness counter, if there is no new data', function () {
+                // Given
+                let getStub = sinon.stub();
+                let setSpy = sinon.spy();
+                let saveSpy = sinon.spy();
+                let item = {
+                    getField: getStub,
+                    setField: setSpy,
+                    saveTx: saveSpy
+                };
+                let citeCountStr = -1;
+                getStub.withArgs('extra').returns('ZSCC:00042[s0]');
 
-            //     // When
-            //     zsc.updateItem(item, citeCountStr);
+                // When
+                zsc.updateItem(item, citeCountStr);
 
-            //     // Then
-            //     assert(getStub.calledWith('extra'));
-            //     assert(setSpy.calledWith('extra', 'ZSCC:00042[s1]'));
-            //     assert(saveSpy.calledOnce);
-            // });
+                // Then
+                assert(getStub.calledWith('extra'));
+                assert(setSpy.calledWith('extra', 'ZSCC:00042[s1]'));
+                assert(saveSpy.calledOnce);
+            });
 
-            // test('should wrap the staleness counter', function () {
-            //     // Given
-            //     let getStub = sinon.stub();
-            //     let setSpy = sinon.spy();
-            //     let saveSpy = sinon.spy();
-            //     let item = {
-            //         getField: getStub,
-            //         setField: setSpy,
-            //         saveTx: saveSpy
-            //     };
-            //     let citeCountStr = -1;
-            //     getStub.withArgs('extra').returns('ZSCC:00042[s9]');
+            test('should wrap the staleness counter', function () {
+                // Given
+                let getStub = sinon.stub();
+                let setSpy = sinon.spy();
+                let saveSpy = sinon.spy();
+                let item = {
+                    getField: getStub,
+                    setField: setSpy,
+                    saveTx: saveSpy
+                };
+                let citeCountStr = -1;
+                getStub.withArgs('extra').returns('ZSCC:00042[s9]');
 
-            //     // When
-            //     zsc.updateItem(item, citeCountStr);
+                // When
+                zsc.updateItem(item, citeCountStr);
 
-            //     // Then
-            //     assert(getStub.calledWith('extra'));
-            //     assert(setSpy.calledWith('extra', 'ZSCC:00042[s0]'));
-            //     assert(saveSpy.calledOnce);
-            // });
+                // Then
+                assert(getStub.calledWith('extra'));
+                assert(setSpy.calledWith('extra', 'ZSCC:00042[s0]'));
+                assert(saveSpy.calledOnce);
+            });
 
-            // test('should remove staleness counter, if there is new data', function () {
-            //     // Given
-            //     let getStub = sinon.stub();
-            //     let setSpy = sinon.spy();
-            //     let saveSpy = sinon.spy();
-            //     let item = {
-            //         getField: getStub,
-            //         setField: setSpy,
-            //         saveTx: saveSpy
-            //     };
-            //     let citeCountStr = 42;
-            //     getStub.withArgs('extra').returns('ZSCC:00042[s0]');
+            test('should remove staleness counter, if there is new data', function () {
+                // Given
+                let getStub = sinon.stub();
+                let setSpy = sinon.spy();
+                let saveSpy = sinon.spy();
+                let item = {
+                    getField: getStub,
+                    setField: setSpy,
+                    saveTx: saveSpy
+                };
+                let citeCountStr = 42;
+                getStub.withArgs('extra').returns('ZSCC:00042[s0]');
 
-            //     // When
-            //     zsc.updateItem(item, citeCountStr);
+                // When
+                zsc.updateItem(item, citeCountStr);
 
-            //     // Then
-            //     assert(getStub.calledWith('extra'));
-            //     assert(setSpy.calledWith('extra', 'ZSCC:00042'));
-            //     assert(saveSpy.calledOnce);
-            // });
+                // Then
+                assert(getStub.calledWith('extra'));
+                assert(setSpy.calledWith('extra', 'ZSCC:00042'));
+                assert(saveSpy.calledOnce);
+            });
 
-            // test('should update legacy data and mark as stale, if there is no new data', function () {
-            //     // Given
-            //     let getStub = sinon.stub();
-            //     let setSpy = sinon.spy();
-            //     let saveSpy = sinon.spy();
-            //     let item = {
-            //         getField: getStub,
-            //         setField: setSpy,
-            //         saveTx: saveSpy
-            //     };
-            //     let citeCountStr = -1;
-            //     getStub.withArgs('extra').returns('00042');
+            test('should update legacy data and mark as stale, if there is no new data', function () {
+                // Given
+                let getStub = sinon.stub();
+                let setSpy = sinon.spy();
+                let saveSpy = sinon.spy();
+                let item = {
+                    getField: getStub,
+                    setField: setSpy,
+                    saveTx: saveSpy
+                };
+                let citeCountStr = -1;
+                getStub.withArgs('extra').returns('00042');
 
-            //     // When
-            //     zsc.updateItem(item, citeCountStr);
+                // When
+                zsc.updateItem(item, citeCountStr);
 
-            //     // Then
-            //     assert(getStub.calledWith('extra'));
-            //     assert(setSpy.calledWith('extra', 'ZSCC:00042[s0]'));
-            //     assert(saveSpy.calledOnce);
-            // });
+                // Then
+                assert(getStub.calledWith('extra'));
+                assert(setSpy.calledWith('extra', 'ZSCC:00042[s0]'));
+                assert(saveSpy.calledOnce);
+            });
 
-            // test('should update legacy "no data" and mark as stale, if there is no new data', function () {
-            //     // Given
-            //     let getStub = sinon.stub();
-            //     let setSpy = sinon.spy();
-            //     let saveSpy = sinon.spy();
-            //     let item = {
-            //         getField: getStub,
-            //         setField: setSpy,
-            //         saveTx: saveSpy
-            //     };
-            //     let citeCountStr = -1;
-            //     getStub.withArgs('extra').returns('No Citation Data');
+            test('should update legacy "no data" and mark as stale, if there is no new data', function () {
+                // Given
+                let getStub = sinon.stub();
+                let setSpy = sinon.spy();
+                let saveSpy = sinon.spy();
+                let item = {
+                    getField: getStub,
+                    setField: setSpy,
+                    saveTx: saveSpy
+                };
+                let citeCountStr = -1;
+                getStub.withArgs('extra').returns('No Citation Data');
 
-            //     // When
-            //     zsc.updateItem(item, citeCountStr);
+                // When
+                zsc.updateItem(item, citeCountStr);
 
-            //     // Then
-            //     assert(getStub.calledWith('extra'));
-            //     assert(setSpy.calledWith('extra', 'ZSCC: NoData[s0]'));
-            //     assert(saveSpy.calledOnce);
-            // });
+                // Then
+                assert(getStub.calledWith('extra'));
+                assert(setSpy.calledWith('extra', 'ZSCC: NoData[s0]'));
+                assert(saveSpy.calledOnce);
+            });
         });
 
         // might be able to test this with sinon.replace()?

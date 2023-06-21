@@ -1,0 +1,4 @@
+<!ENTITY zotero.scholarcitations.update.label "更新引用统计">
+<!ENTITY zotero.scholarcitations.updateCol.label "为该集合更新引用统计">
+<!ENTITY zotero.scholarcitations.updateAll.label "更新所有引用统计">
+<!ENTITY zotero.scholarcitations.options.label "ZSCC偏好设置...">

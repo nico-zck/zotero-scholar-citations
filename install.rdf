@@ -4,7 +4,7 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>zoteroscholarcitations@nico.info</em:id>
     <em:name>Zotero Scholar Citations</em:name>
-    <em:version>2.1.2</em:version>
+    <em:version>2.1.3</em:version>
     <em:type>2</em:type>
     <em:multiprocessCompatible>true</em:multiprocessCompatible>
     <em:creator>Nico</em:creator>
@@ -34,20 +34,6 @@
         <em:locale>en-US</em:locale>
         <em:name>Zotero Scholar Citations</em:name>
         <em:description>The add-on automatically fetches the number of citations of your Zotero items from Google Scholar.</em:description>
-      </Description>
-    </em:localized>
-    <em:localized>
-      <Description>
-        <em:locale>ru-RU</em:locale>
-        <em:name>Zotero Scholar Citations</em:name>
-        <em:description>Плагин для Zotero для автоматической выборки числа цитирований из Google Scholar.</em:description>
-      </Description>
-    </em:localized>
-    <em:localized>
-      <Description>
-        <em:locale>it-IT</em:locale>
-        <em:name>Zotero Scholar Citations</em:name>
-        <em:description>Plugin di Zotero per il recupero automatico del numero di citazioni in Google Scholar.</em:description>
       </Description>
     </em:localized>
   </Description>
