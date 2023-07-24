@@ -6,14 +6,14 @@
             <rdf:Seq>
                 <rdf:li>
                     <rdf:Description>
-                        <em:version>2.1.3</em:version>
+                        <em:version>2.1.4</em:version>
 
                         <em:targetApplication>
                             <rdf:Description>
                                 <em:id>zotero@chnm.gmu.edu</em:id>
                                 <em:minVersion>5.0.0</em:minVersion>
                                 <em:maxVersion>6.*</em:maxVersion>
-                                <em:updateLink>https://github.com/nico-zck/zotero-scholar-citations/releases/download/2.1.3/zotero-scholar-citations-2.1.3.xpi</em:updateLink>
+                                <em:updateLink>https://github.com/nico-zck/zotero-scholar-citations/releases/download/2.1.4/zotero-scholar-citations-2.1.4.xpi</em:updateLink>
                             </rdf:Description>
                         </em:targetApplication>
 
@@ -22,7 +22,7 @@
                                 <em:id>juris-m@juris-m.github.io</em:id>
                                 <em:minVersion>4.999</em:minVersion>
                                 <em:maxVersion>6.*</em:maxVersion>
-                                <em:updateLink>https://github.com/nico-zck/zotero-scholar-citations/releases/download/2.1.3/zotero-scholar-citations-2.1.3.xpi</em:updateLink>
+                                <em:updateLink>https://github.com/nico-zck/zotero-scholar-citations/releases/download/2.1.4/zotero-scholar-citations-2.1.4.xpi</em:updateLink>
                             </rdf:Description>
                         </em:targetApplication>
 

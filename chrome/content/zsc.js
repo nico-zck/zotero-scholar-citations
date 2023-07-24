@@ -192,12 +192,23 @@ zsc.retrieveCitationData = function (item, cb) {
   xhr.setRequestHeader("User-Agent", zsc.getUserAgent());
   // xhr.responseType = "document";  // will return a HTMLDocument instead of text
   xhr.onreadystatechange = function () {
+    if (isDebug())
+      Zotero.debug(
+        "[scholar-citations] readyState: " +
+          this.readyState.toString() +
+          ", status: " +
+          this.status.toString()
+      );
+
     if (this.readyState == 4 && this.status == 200) {
       // // debug on response text
       // if (isDebug()) Zotero.debug(this.responseText);
 
       // check if response includes meaningful content
-      if (this.responseText.indexOf('class="gs_r gs_or gs_scl"') != -1) {
+      if (
+        this.responseText.indexOf('class="gs_r gs_or gs_scl"') != -1 ||
+        this.responseText.indexOf('class="gs_r gs_or gs_scl gs_fmar"') != 0
+      ) {
         if (isDebug()) {
           Zotero.debug(
             "[scholar-citations] received non-captcha scholar results!"
@@ -249,7 +260,7 @@ zsc.retrieveCitationData = function (item, cb) {
           Zotero.debug(
             "[scholar-citations] neither got meaningful text or captcha, please check the following response text"
           );
-        if (isDebug()) Zotero.debug(this.responseText);
+        Zotero.debug(this.responseText);
         alert("neither got meaningful text or captcha, please check it in log");
       }
     } else if (this.readyState == 4 && this.status == 429) {
@@ -410,8 +421,8 @@ zsc.getUserAgent = function () {
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.53 Safari/537.36";
   userUA = getPref("userAgent");
   if (userUA != null && userUA.length > 0) {
-    return userUA
-  } else{
+    return userUA;
+  } else {
     return defaultUA;
   }
 };
